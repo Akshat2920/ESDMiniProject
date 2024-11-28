@@ -16,7 +16,7 @@ public class StudentMapper {
         return StudentDTO.builder()
                 .rollNo(student.getRollNo())
                 .firstName(student.getFirstName())
-                .lastName(student.getLastName())
+                .lastName(student.getLastName() != null ? student.getLastName() : "")
                 .email(student.getEmail())
                 .domain(DomainDTO.builder()
                         .program(domain.getProgram())

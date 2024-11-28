@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.akshat.esd.mini.helper.JWTHelper;
+import com.akshat.esd.mini.Exceptions.AdminNotFoundException;
+import com.akshat.esd.mini.Exceptions.InvalidPasswordException;
+
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +27,10 @@ public class AdminServices {
     }
 
     public String loginAdmin(AdminLogin adminLogin) {
-        Admin admin = adminRepo.findByEmail(adminLogin.Email()).orElseThrow(() -> new RuntimeException("Admin not found"));
+        Admin admin = adminRepo.findByEmail(adminLogin.Email())
+                                .orElseThrow(() -> new AdminNotFoundException("Invalid Email"));
         if (!bCryptPasswordEncoder.matches(adminLogin.password(), admin.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new InvalidPasswordException("Invalid password");
         }
         return jwt.generateToken(adminLogin.Email());
     }
