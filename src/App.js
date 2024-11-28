@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import 'bootstrap/dist/js/bootstrap.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+//import './App.css';
 import Login from './pages/Login';
 import View from './pages/View';
 import MainLayout from './layouts/MainLayout';

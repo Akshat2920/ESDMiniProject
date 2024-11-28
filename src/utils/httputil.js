@@ -1,11 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-/**
- * Validates the JWT token by calling the backend API.
- * @param {string} token - JWT token to validate.
- * @returns {Promise<boolean>} - Resolves to true if the token is valid, false otherwise.
- */
 export const validateToken = async (token) => {
   try {
     const response = await axios.get('http://localhost:8080/api/v1/auth/validate', {
@@ -27,10 +22,6 @@ export const validateToken = async (token) => {
   }
 };
 
-/**
- * Fetches all students data from the API.
- * @returns {Promise<Array>} - Resolves to the array of students.
- */
 export const fetchStudentsData = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -59,3 +50,22 @@ export const fetchStudentsData = async () => {
       throw new Error(message);
     }
   };
+
+export const loginUser = async (email, password) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/auth/login', {
+      email,
+      password,
+    });
+
+    if (response.status === 200 && response.data) {
+      return response.data; // Return the response data on success
+    } else {
+      throw new Error('Unexpected response from server');
+    }
+  } catch (error) {
+    // Extract backend error message if available
+    const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
+    throw new Error(errorMessage);
+  }
+};

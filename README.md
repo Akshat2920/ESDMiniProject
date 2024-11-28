@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+#Installing react dependencies
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```bash
+npm install
+npm install axios
+npm install react-router-dom
+npm install bootstrap
+npm install jquery
+```
 
-## Available Scripts
+#Setting up the database
 
-In the project directory, you can run:
+install mysql (https://dev.mysql.com/downloads/installer/)
+create a user (use of root is not recommended)
+update username and password in application.properties file (line 11 and 12)
+create a database called ESD (if not created, hibernate will create it automatically)
+Verify and update mqsql port in application.properties file (line 13)
+Required tables will be created automatically (ddl-auto=create in application.properties file, but this should be changed to update in production)
+If not automatically created, create the tables manually (see ![create.sql](./create.sql) file) (Syntax : source {path/to/create.sql})
+insert data in all the tables (see ![insert.sql](./insert.sql) file) (Syntax : source {path/to/insert.sql})
 
-### `npm start`
+#Note
+To insert data to admin table, exclude api path(/api/v1/admin) from interceptor (SecurityConfig.java, line 41)
+Note : The password is stored in encrypted format, inserting fro sql without hasing will throw error while login
+Use postman or curl to insert data to admin table as there is no frontend API for this
+JSON format for admin table :
+{
+    "admin_id" : "1",
+    "full_name": "admin",
+    "email": "admin@gmail.com",
+    "password": "admin"
+}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-- All springboot dependecies are managed by maven, so no need to install anything
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#Running the application
 
-### `npm test`
+```bash
+run java application (MiniApplication.java)
+run react application (npm start)
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#USE CASE
+Allow the employee of admin department to login. Then view the specialisations of all students or filtered by various criteria such as domain, specialisation, etc. 
+Note : The student has a specialisation in a particular domain if they have selected courses such that the cumulative sum in a certain
+specialisation of those courses is greater than 20 credits.
 
-### `npm run build`
+#Database Schema
+[Database Schema](./database_schema.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#Backend Structure
+1. Controller : Handles the API requests
+2. Service : Contains the business logic
+3. Repository : Interacts with the database
+4. Entity : Represents the database tables
+5. DTO : Data Transfer Object (used for transferring data between processes)
+6. Mapper : Maps the DTO to Entity and vice versa
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#Backend Security
+1. JWT is used for security
+2. A token is generated when the admin logs in
+3. This token is used for all the subsequent requests
+4. The token is sent in the header of the request with the key "Authorization" and the value "Bearer {token}"
+5. Interceptor is used to intercept the all request except with path (api/v1/auth/**) and validate the token
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#Exception Handling
+1. A custom exception is used to handle the exceptions of invalid email(404) and password(401) in the login API
+2. This exception is handled in the global level in the application
 
-### `npm run eject`
+#Backend API
+Backend handles three API requests :
+1. /login (login as admin) (/api/v1/auth/login)
+2. /validate (validate the token) (/api/v1/auth/validate)
+3. /getallstudents (get all student details as per the use case) (/api/v1/student/getallstudents)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#Response Structure
+{
+    "rollNo": "101",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "domain": {
+      "program": "B.Tech",
+      "batch": "2021",
+      "qualification": "CSEß"
+    },
+    "specialization": {
+      "code": "AI102",
+      "name": "AI"
+    }
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#Frontend Structure
+1. Layout : Contains the main layout of the application
+2. Pages : Contains the pages of the application 
+    - [./src/pages/Login.jsx](./src/pages/Login.jsx) : Login page
+    - [./src/pages/ViewStudents.jsx](./src/pages/ViewStudents.jsx) : Page to view all students details as per the use case
+3. Components : Contains reusable components 
+    - [./src/components/Dropdown.jsx](./src/components/Dropdown.jsx) : Dropdown component
+    - [./src/components/Footer.jsx](./src/components/Footer.jsx) : Footer component
+    - [./src/components/Header.jsx](./src/components/Header.jsx) : Header component
+4. Hooks : Custom hooks 
+    - [./src/hooks/useFilter.jsx](./src/hooks/useFilter.jsx) : Filter the students based on the criteria
+    - [./src/hooks/usePagination.jsx](./src/hooks/usePagination.jsx) : Handing the pages
+5. Utils : Utility functions 
+    - [./src/utils/httputil.jsx](./src/utils/httputil.jsx) : Contains all the api calls
+    - [./src/utils/sortData.jsx](./src/utils/sortData.jsx) : Sort the students data fetched from the backend based on the criteria

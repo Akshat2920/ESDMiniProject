@@ -1,32 +1,21 @@
+import { loginUser } from '../utils/httputil';
 import React, { useState } from 'react';
-import axios from 'axios'; // Ensure axios is installed using: npm install axios
 
 function Login({ onLogin }) {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        try {
-            // Replace with your actual API call for login
-            const response = await axios.post('http://localhost:8080/api/v1/auth/login', {
-                email: email,
-                password: password,
-            });
-    
-            // Assuming a 200 status and a returned JWT token if successful
-            if (response.status === 200 && response.data) {
-                onLogin(response.data); // Pass the token to the parent component
-            } else {
-                //setError(response.data.message || 'Incorrect ID or password');
-                setError('Incorrect ID or password');
-            }
-        } catch (error) {
-            setError('Incorrect ID or password');
-        }
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const data = await loginUser(email, password); // Call the utility function
+      onLogin(data); // Pass the token or user data to the parent component
+    } catch (error) {
+      setError(error.message); // Display the error message
+    }
+  };
 
     return (
         <div className="container d-flex justify-content-center align-items-center" style={{ paddingTop: '1%' }}>

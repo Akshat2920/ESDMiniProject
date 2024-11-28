@@ -3,6 +3,7 @@ import { fetchStudentsData } from '../utils/httputil';
 import { useFilters } from '../hooks/useFilters';
 import { usePagination } from '../hooks/usePagination';
 import { sortData } from '../utils/sortData';
+import Dropdown from '../components/Dropdown';
 
 function View() {
   const [students, setStudents] = useState([]);
@@ -58,41 +59,40 @@ function View() {
         <p className="text-danger text-center">{error}</p>
       ) : (
         <>
-          {/* Dropdowns */}
+          {/* Filters */}
           <div className="row mb-3">
-            {/* Filters */}
-            <div className="col-md-3">
-              <label htmlFor="programme" className="form-label">Programme</label>
-              <select id="programme" name="Programme" className="form-select" value={filters.Programme} onChange={handleFilterChange}>
-                {programmeOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
-            <div className="col-md-3">
-              <label htmlFor="batch" className="form-label">Batch</label>
-              <select id="batch" name="Batch" className="form-select" value={filters.Batch} onChange={handleFilterChange}>
-                {batchOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
-            <div className="col-md-3">
-              <label htmlFor="qualification" className="form-label">Qualification</label>
-              <select id="qualification" name="Qualification" className="form-select" value={filters.Qualification} onChange={handleFilterChange}>
-                {qualificationOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
-            <div className="col-md-3">
-              <label htmlFor="specialization" className="form-label">Specialization</label>
-              <select id="specialization" name="Specialization" className="form-select" value={filters.Specialization} onChange={handleFilterChange}>
-                {specializationOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
+            <Dropdown
+              id="programme"
+              name="Programme"
+              label="Programme"
+              options={programmeOptions}
+              value={filters.Programme}
+              onChange={handleFilterChange}
+            />
+            <Dropdown
+              id="batch"
+              name="Batch"
+              label="Batch"
+              options={batchOptions}
+              value={filters.Batch}
+              onChange={handleFilterChange}
+            />
+            <Dropdown
+              id="qualification"
+              name="Qualification"
+              label="Qualification"
+              options={qualificationOptions}
+              value={filters.Qualification}
+              onChange={handleFilterChange}
+            />
+            <Dropdown
+              id="specialization"
+              name="Specialization"
+              label="Specialization"
+              options={specializationOptions}
+              value={filters.Specialization}
+              onChange={handleFilterChange}
+            />
           </div>
 
           <div className="d-flex justify-content-between mb-3">
@@ -104,6 +104,12 @@ function View() {
                 ))}
               </select>
             </div>
+
+            {/* Display total entries */}
+            <div className="align-self-center">
+              <strong>Total entries: {filteredData.length}</strong>
+            </div>
+
             <button className="btn btn-secondary" onClick={resetFilters}>Reset All Filters</button>
           </div>
 
@@ -121,10 +127,10 @@ function View() {
               </tr>
             </thead>
             <tbody>
-              {currentRows.length > 0 ? currentRows.map((student, index) => (
-                <tr key={index}>
+              {currentRows.length > 0 ? currentRows.map((student) => (
+                <tr key={student.rollNo}>
                   <td>{student.rollNo}</td>
-                  <td>{`${student.firstName} ${student.lastName || ''}`}</td>
+                  <td>{student.firstName} {student.lastName || ''}</td>
                   <td>{student.email}</td>
                   <td>{student.domain.program}</td>
                   <td>{student.domain.batch}</td>

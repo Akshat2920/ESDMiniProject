@@ -31,19 +31,19 @@ VALUES
 (20, 'M.tech', '2024', 'ECE'),
 
 -- iMTech 
-(21, 'iMtech', '2020', 'CSE'),
-(22, 'iMtech', '2020', 'ECE'),
-(23, 'iMtech', '2021', 'CSE'),
-(24, 'iMtech', '2021', 'ECE'),
-(25, 'iMtech', '2022', 'CSE'),
-(26, 'iMtech', '2022', 'ECE'),
-(27, 'iMtech', '2023', 'CSE'),
-(28, 'iMtech', '2023', 'ECE'),
-(29, 'iMtech', '2024', 'CSE'),
-(30, 'iMtech', '2024', 'ECE');
+(21, 'iM.tech', '2020', 'CSE'),
+(22, 'iM.tech', '2020', 'ECE'),
+(23, 'iM.tech', '2021', 'CSE'),
+(24, 'iM.tech', '2021', 'ECE'),
+(25, 'iM.tech', '2022', 'CSE'),
+(26, 'iM.tech', '2022', 'ECE'),
+(27, 'iM.tech', '2023', 'CSE'),
+(28, 'iM.tech', '2023', 'ECE'),
+(29, 'iM.tech', '2024', 'CSE'),
+(30, 'iM.tech', '2024', 'ECE');
 
 
-INSERT INTO student (student_id, roll_no, first_name, last_name, email, domain, specialization)
+INSERT INTO students (student_id, roll_no, first_name, last_name, email, domain, specialization)
 VALUES
     -- B.Tech 2023
     ( 1, 'BT2023001', 'Alice', 'Johnson', 'alice.j@example.com', 7, 1),
@@ -123,3 +123,46 @@ VALUES
     (70, 'IMT2024010', 'Amy', null, 'amy.s3@example.com', 29, 3),
     (71, 'IMT2024011', 'Ray', 'Holt', 'ray.h3@example.com', 30, null),
     (72, 'IMT2024012', 'Gina', null, 'gina.l3@example.com', 29, 2);
+
+    --inserting more data to students table
+    INSERT INTO students (student_id, roll_no, first_name, last_name, email, domain, specialization)
+    VALUES
+    -- iMech 2022
+    (73, 'IM2022001', 'Alice', 'Johnson', 'alice.j4@example.com', 25, 1),
+    (74, 'IM2022002', 'Bob', null, 'bob.s4@example.com', 25, 2),
+    (75, 'IM2022003', 'Charlie', 'Brown', 'charlie.b4@example.com', 25, 3),
+    (76, 'IM2022004', 'Diana', null, 'diana.p4@example.com', 25, 1),
+    (77, 'IM2022005', 'Eve', 'Adams', 'eve.a4@example.com', 25, 2),
+    (78, 'IM2022006', 'Frank', null, 'frank.w4@example.com', 26, 3),
+    (79, 'IM2022007', 'Grace', 'Hopper', 'grace.h4@example.com', 26, null),
+    (80, 'IM2022008', 'Hank', null, 'hank.p4@example.com', 26, null),
+    (81, 'IM2022009', 'Ivy', 'Clark', 'ivy.c4@example.com', 26, 3),
+    (82, 'IM2022010', 'Jack', null, 'jack.j4@example.com', 25, null),
+    (83, 'IM2022011', 'Finn', 'Green', 'finn.g4@example.com', 26, 2),
+    (84, 'IM2022012', 'Gina', null, 'gina.h4@example.com', 26, 3),
+    -- iMtech 2021
+    (85, 'IMT2021001', 'Alice', 'Johnson', 'alice.j5@example.com', 24, 1),     
+    (86, 'IMT2021002', 'Bob', null, 'bob.s5@example.com', 23, 2),
+    (87, 'IMT2021003', 'Charlie', 'Brown', 'charlie.b5@examle.com', 23, 3),
+    (88, 'IMT2021004', 'Diana', null, 'diana.p5@example.com', 23, 1),
+    (89, 'IMT2021005', 'Eve', 'Adams', 'eve.a5@example.com', 24, 2),
+    (90, 'IMT2021006', 'Frank', null, 'frank.w5@example.com', 24, 3),
+    (91, 'IMT2021007', 'Grace', 'Hopper', 'grace.h5@example.com', 24, null),
+    (92, 'IMT2021008', 'Hank', null, 'hank.p5@example.com', 23, null),
+    (93, 'IMT2021009', 'Ivy', 'Clark', 'ivy.c5@example.com', 23, 3),
+    (94, 'IMT2021010', 'Jack', null, 'jack.j5@example.com', 24, null),
+    (95, 'IMT2021011', 'Finn', 'Green', 'finn.g5@example.com', 23, 2),
+    (96, 'IMT2021012', 'Gina', null, 'gina.h5@example.com', 24, 3),
+    -- iMtech 2020
+    (97, 'IMT2020001', 'Alice', 'Johnson', 'alice.j6@example.com', 21, 1),
+    (98, 'IMT2020002', 'Bob', null, 'bob.s6@example.com', 21, 2),
+    (99, 'IMT2020003', 'Charlie', 'Brown', 'charlie.b6@example.com', 21, 3),
+    (100, 'IMT2020004', 'Diana', null, 'diana.p6@example.com', 21, 1),
+    (101, 'IMT2020005', 'Eve', 'Adams', 'eve.a6@example.com', 21, 2),
+    (102, 'IMT2020006', 'Frank', null, 'frank.w6@example.com', 22, 3),
+    (103, 'IMT2020007', 'Grace', 'Hopper', 'grace.h6@example.com', 22, null),
+    (104, 'IMT2020008', 'Hank', null, 'hank.p6@example.com', 21, null),
+    (105, 'IMT2020009', 'Ivy', 'Clark', 'ivy.c6@example.com', 21, 3),
+    (106, 'IMT2020010', 'Jack', null, 'jack.j6@example.com', 21, null),
+    (107, 'IMT2020011', 'Finn', 'Green', 'finn.g6@example.com', 22, 2),
+    (108, 'IMT2020012', 'Gina', null, 'gina.h6@example.com', 22, 3);
