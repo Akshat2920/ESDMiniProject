@@ -23,10 +23,10 @@ public class StudentMapper {
                         .batch(domain.getBatch())
                         .qualification(domain.getQualification())
                         .build())
-                .specialization(SpecializationDTO.builder()
+                .specialization(specialization != null ? SpecializationDTO.builder()
                         .code(specialization.getCode())
                         .name(specialization.getName())
-                        .build())
+                        .build() : null)
                 .build();
     }
 }

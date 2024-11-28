@@ -29,8 +29,8 @@ public class StudentServices {
         return students.stream().map(student -> {
             Domain domain = domainRepository.findById(student.getDomain())
                     .orElseThrow(() -> new RuntimeException("Domain not found"));
-            specialization specialization = specializationRepository.findById(student.getSpecialization())
-                    .orElseThrow(() -> new RuntimeException("Specialization not found"));
+            specialization specialization = student.getSpecialization() != null ? specializationRepository.findById(student.getSpecialization())
+                    .orElseThrow(() -> new RuntimeException("Specialization not found")) : null;
             return studentMapper.toDTO(student, domain, specialization);
         }).collect(Collectors.toList());
     }
