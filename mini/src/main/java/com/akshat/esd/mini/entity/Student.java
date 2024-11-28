@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "student")
+@Table(name = "students")
 
 public class Student {
     @Id
@@ -34,5 +34,5 @@ public class Student {
     private Long domain;
 
     @Column(name = "specialization", nullable = false)
-    private String specialization;
+    private Long specialization;
 }
