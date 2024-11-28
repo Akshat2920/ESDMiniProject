@@ -18,7 +18,7 @@ function View() {
 
   const { filters, handleFilterChange, resetFilters, filteredData } = useFilters(initialFilters, students);
   const { currentPage, rowsPerPage, totalPages, currentRowsStart, currentRowsEnd, handlePageChange, handleRowsPerPage } =
-    usePagination(10, filteredData.length);
+    usePagination(20, filteredData.length);
 
   const sortedData = sortData(filteredData);
   const currentRows = rowsPerPage === "All" 
@@ -124,12 +124,12 @@ function View() {
               {currentRows.length > 0 ? currentRows.map((student, index) => (
                 <tr key={index}>
                   <td>{student.rollNo}</td>
-                  <td>{`${student.firstName} ${student.lastName}`}</td>
+                  <td>{`${student.firstName} ${student.lastName || ''}`}</td>
                   <td>{student.email}</td>
                   <td>{student.domain.program}</td>
                   <td>{student.domain.batch}</td>
                   <td>{student.domain.qualification}</td>
-                  <td>{student.specialization.name || 'None'}</td>
+                  <td>{student.specialization ? student.specialization.name : 'None'}</td>
                 </tr>
               )) : (
                 <tr>

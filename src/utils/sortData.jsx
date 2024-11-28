@@ -1,10 +1,15 @@
 export function sortData(data) {
   return [...data].sort((a, b) => {
-    // Handle null specialization
-    if (a.specialization === null) return 1; // Move null specialization to the end
-    if (b.specialization === null) return -1; // Move non-null specialization above null
+    if (a.specialization === null && b.specialization !== null) return 1;
+    if (b.specialization === null && a.specialization !== null) return -1;
 
-    // Sort by rollNo (ascending)
-    return a.rollNo.localeCompare(b.rollNo); // Assumes rollNo is a string
+    // Sort by rollNo primarily
+    const rollNoComparison = a.rollNo.localeCompare(b.rollNo);
+    if (rollNoComparison !== 0) return rollNoComparison;
+
+    // Secondary sort by lastName (null values treated as empty strings)
+    const lastNameA = a.lastName || "";
+    const lastNameB = b.lastName || "";
+    return lastNameA.localeCompare(lastNameB);
   });
 }

@@ -35,8 +35,8 @@ export function useFilters(initialFilters, initialData) {
       (filters.Qualification === 'All' || domain.qualification === filters.Qualification) &&
       (
         filters.Specialization === 'All' ||
-        (filters.Specialization === 'None' && specialization.name === null) ||
-        specialization.name === filters.Specialization
+        (filters.Specialization === 'None' && !student.specialization) ||
+        (student.specialization && student.specialization.name.toLowerCase() === filters.Specialization.toLowerCase())
       )
     );
   });

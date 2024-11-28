@@ -7,7 +7,7 @@ export function usePagination(initialRowsPerPage, dataLength) {
 
   const [rowsPerPage, setRowsPerPage] = useState(() => {
     const savedRowsPerPage = localStorage.getItem('rowsPerPage');
-    return savedRowsPerPage === "All" ? "All" : parseInt(savedRowsPerPage, 20) || initialRowsPerPage;
+    return savedRowsPerPage === "All" ? "All" : parseInt(savedRowsPerPage, 10) || initialRowsPerPage;
   });
 
   useEffect(() => {
@@ -25,9 +25,9 @@ export function usePagination(initialRowsPerPage, dataLength) {
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleRowsPerPage = (e) => {
-    const value = e.target.value === "All" ? "All" : parseInt(e.target.value, 20);
+    const value = e.target.value === "All" ? "All" : parseInt(e.target.value, 10);
     setRowsPerPage(value);
-    setCurrentPage(1); // Reset to first page when rowsPerPage changes
+    setCurrentPage(1); 
   };
 
   return {
