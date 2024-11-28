@@ -21,7 +21,9 @@ function View() {
     usePagination(10, filteredData.length);
 
   const sortedData = sortData(filteredData);
-  const currentRows = sortedData.slice(currentRowsStart, currentRowsEnd);
+  const currentRows = rowsPerPage === "All" 
+    ? sortedData 
+    : sortedData.slice(currentRowsStart, currentRowsEnd);
 
   // Fetch student data
   useEffect(() => {
@@ -42,9 +44,9 @@ function View() {
 
   const programmeOptions = ['All', 'B.Tech', 'M.Tech', 'iM.Tech'];
   const qualificationOptions = ['All', 'CSE', 'ECE'];
-  const specializationOptions = ['All', 'ML', 'DevOps', 'None'];
+  const specializationOptions = ['All', 'ML', 'AI', 'DevOps', 'None'];
   const batchOptions = ['All', '2020', '2021', '2022', '2023', '2024'];
-  const pagesOption = ['5', '10', '20', '50', '100', 'All'];
+  const pagesOption = ['20', '50', '100', 'All'];
 
   return (
     <div className="container mt-4">
@@ -119,15 +121,15 @@ function View() {
               </tr>
             </thead>
             <tbody>
-              {currentRows.length > 0 ? currentRows.map((student) => (
-                <tr key={student.studentId}>
+              {currentRows.length > 0 ? currentRows.map((student, index) => (
+                <tr key={index}>
                   <td>{student.rollNo}</td>
-                  <td>{student.firstName} {student.lastName}</td>
+                  <td>{`${student.firstName} ${student.lastName}`}</td>
                   <td>{student.email}</td>
-                  <td>{student.programme}</td>
-                  <td>{student.batch}</td>
-                  <td>{student.qualification}</td>
-                  <td>{student.specialization || 'None'}</td>
+                  <td>{student.domain.program}</td>
+                  <td>{student.domain.batch}</td>
+                  <td>{student.domain.qualification}</td>
+                  <td>{student.specialization.name || 'None'}</td>
                 </tr>
               )) : (
                 <tr>

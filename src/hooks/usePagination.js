@@ -6,7 +6,8 @@ export function usePagination(initialRowsPerPage, dataLength) {
   });
 
   const [rowsPerPage, setRowsPerPage] = useState(() => {
-    return parseInt(localStorage.getItem('rowsPerPage'), 10) || initialRowsPerPage;
+    const savedRowsPerPage = localStorage.getItem('rowsPerPage');
+    return savedRowsPerPage === "All" ? "All" : parseInt(savedRowsPerPage, 20) || initialRowsPerPage;
   });
 
   useEffect(() => {
@@ -17,14 +18,16 @@ export function usePagination(initialRowsPerPage, dataLength) {
     localStorage.setItem('rowsPerPage', rowsPerPage);
   }, [rowsPerPage]);
 
-  const totalPages = Math.ceil(dataLength / rowsPerPage);
-  const indexLastRow = currentPage * rowsPerPage;
-  const indexFirstRow = indexLastRow - rowsPerPage;
+  const totalPages = rowsPerPage === "All" ? 1 : Math.ceil(dataLength / rowsPerPage);
+  const indexLastRow = rowsPerPage === "All" ? dataLength : currentPage * rowsPerPage;
+  const indexFirstRow = rowsPerPage === "All" ? 0 : indexLastRow - rowsPerPage;
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
   const handleRowsPerPage = (e) => {
-    setRowsPerPage(parseInt(e.target.value, 10));
-    setCurrentPage(1);
+    const value = e.target.value === "All" ? "All" : parseInt(e.target.value, 20);
+    setRowsPerPage(value);
+    setCurrentPage(1); // Reset to first page when rowsPerPage changes
   };
 
   return {

@@ -36,10 +36,6 @@ export const fetchStudentsData = async () => {
     if (!token) {
       throw new Error('Authorization token is missing.');
     }
-    //const isValidToken = await validateToken(token);
-    //if (!isValidToken) {
-    //  throw new Error('Invalid token. Please log in again.');
-    //}
     try {
       const response = await axios.get('http://localhost:8080/api/v1/allstudents', {
         headers: {
